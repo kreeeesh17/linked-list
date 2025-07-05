@@ -56,6 +56,7 @@ struct Node{
 // O(N)
 
 Node* convertarrtoll(vector<ll>&a){
+    if(a.empty()) return NULL;
     Node* head=new Node(a[0]);
     Node* mover=head;
     for(ll i=1;i<a.size();i++){

@@ -1,7 +1,7 @@
 /**************************************
 05/07
 Author - kreeeesh_17
-Created : 11:06:15
+Created : 19:16:43
 **************************************/
  
 #include<bits/stdc++.h>
@@ -39,7 +39,6 @@ ll dx[ ] = { 1 , 0 , -1 , 0 } ;
 ll dy[ ] = { 0 , 1 , 0 , -1 } ;
 /********************************************************************************************************************************************************************************************/
 
-
 struct Node{
     ll data;
     Node* next;
@@ -69,43 +68,105 @@ Node* convertarrtoll(vector<ll>&a){
 
 // O(N)
 
-ll lenofll(Node* head){
-    ll count=0;
-    Node* temp=head;
-    while(temp){
-        temp=temp->next;
-        count++;
-    }
-    return count;
-}
-
-// O(N)
-
-ll isvalpres(Node* head, ll val){
-    Node* temp=head;
-    while(temp){
-        if(temp->data==val) return 1;
-        temp=temp->next;
-    }
-    return 0;
-}
-void solve(){
-    vector<ll>a={2,5,8,7};    
-    Node* head= convertarrtoll(a);
-    cout<<lenofll(head)<<endl;
-    ll val;
-    cin>>val;
-    if(isvalpres(head,val)){
-        cout<<"PRESENT"<<endl;
-    }
-    else{
-        cout<<"NOT PRESENT"<<endl;
-    }
+void printll(Node* head){
     Node* temp=head;
     while(temp){
         cout<<temp->data<<" ";
         temp=temp->next;
-    }    
+    }
+    cout<<endl;  
+}
+
+// O(1)
+
+Node* insertathead(Node* head, ll val){
+    Node* temp=new Node(val,head);
+    return temp;
+}
+
+//O(N)
+
+Node* insertatend(Node* head, ll val){
+    if(head==NULL){
+        return new Node(val);
+    }
+    Node *temp=head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    Node* newnode=new Node(val);
+    temp->next=newnode;
+    return head;
+
+}
+
+//O(k)
+
+Node* insertatk(Node* head, ll k, ll val){
+    if(head==NULL){
+        if(k==1){
+            return new Node(val);
+        }
+        else{
+            return NULL;
+        }
+    }
+    if(k==1){
+        Node* temp=new Node(val,head);
+        return temp;
+    }
+    ll count=0;
+    Node* temp=head;
+    while(temp!=NULL){
+        count++;
+        if(count==k-1){
+            Node* newnode=new Node(val,temp->next);
+            temp->next=newnode;
+            break;
+        }
+        temp=temp->next;
+    }
+    return head;
+}
+
+// O(N)
+
+Node* insertbeforeel(Node* head, ll el, ll val){
+    if(head==NULL){
+        return NULL;
+    }
+    if(head->data==val){
+        Node* temp=new Node(val,head);
+        return temp;
+    }
+    Node* temp=head;
+    while(temp!=NULL){
+        if(temp->next->data==el){
+            Node* newnode=new Node(val,temp->next);
+            temp->next=newnode;
+            break;
+        }
+        temp=temp->next;
+    }
+    return head;
+}
+
+void solve(){
+    vector<ll>a={1,2,5,8,7,9,1,12,5,7,10,1,13};    
+    Node* head= convertarrtoll(a);
+    printll(head);    
+    head=insertathead(head,15);
+    printll(head);
+    head=insertatend(head,27);
+    printll(head);
+    head=insertatk(head,3,11);
+    printll(head);
+    vint b={};
+    Node* head2=convertarrtoll(b);
+    head2=insertatk(head2,1,1);
+    printll(head2);
+    head=insertbeforeel(head,12,69);
+    printll(head);
 }
 int32_t main(){
     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
